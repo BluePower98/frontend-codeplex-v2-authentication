@@ -1,0 +1,168 @@
+<div class="mat-dialog-header">
+    <h2 class="mb-2" mat-dialog-title>
+        {{ data.title }}
+    </h2>
+    <button mat-icon-button mat-dialog-close>
+        <mat-icon [svgIcon]="'heroicons_outline:x'"></mat-icon>
+    </button>
+</div>
+
+<mat-dialog-content class="p-6">
+
+    <form [formGroup]="form" autocomplete="off" class="flex flex-col mt-0 custom-mat-form">
+
+        <div class="grid md:grid-cols-8 sm:grid-cols-4 gap-x-6 w-full">
+            <div class="md:col-span-4 sm:col-span-4">
+                <mat-form-field appearance="outline" class="w-full">
+                    <mat-label>Nombre</mat-label>
+                    <input 
+                        matInput 
+                        formControlName="name" 
+                        [errorStateMatcher]="errorMatcher" />
+    
+                    <mat-error *ngIf="f.name.errors">
+                        <app-error-messages [errors]="f.name.errors"></app-error-messages>
+                    </mat-error>
+                </mat-form-field>
+            </div>
+            <div class="md:col-span-4 sm:col-span-4">
+                <mat-form-field appearance="outline" class="w-full">
+                    <mat-label>Teléfono</mat-label>
+                    <input 
+                        matInput 
+                        formControlName="telefono" 
+                        [errorStateMatcher]="errorMatcher" />
+    
+                    <mat-error *ngIf="f.telefono.errors">
+                        <app-error-messages [errors]="f.telefono.errors"></app-error-messages>
+                    </mat-error>
+                </mat-form-field>
+            </div>
+        </div>
+
+        <div class="flex">
+            <mat-form-field appearance="outline" class="w-full">
+                <mat-label>Correo electrónico</mat-label>
+                <input 
+                    matInput 
+                    type="email" 
+                    formControlName="email" 
+                    [errorStateMatcher]="errorMatcher" />
+
+                <mat-error *ngIf="f.email.errors">
+                    <app-error-messages [errors]="f.email.errors"></app-error-messages>
+                </mat-error>
+            </mat-form-field>
+        </div>
+
+        <div class="grid md:grid-cols-8 sm:grid-cols-4 gap-x-6 w-full">
+            <div class="md:col-span-4 sm:col-span-4">
+                <mat-form-field appearance="outline" class="w-full">
+                    <mat-label>Contraseña</mat-label>
+                    <input 
+                        matInput 
+                        type="password" 
+                        formControlName="password" 
+                        [errorStateMatcher]="errorMatcher" />
+    
+                    <mat-error *ngIf="f.password.errors">
+                        <app-error-messages [errors]="f.password.errors"></app-error-messages>
+                    </mat-error>
+                </mat-form-field>
+            </div>
+            <div class="md:col-span-4 sm:col-span-4">
+                <mat-form-field appearance="outline" class="w-full">
+                    <mat-label>Confirmar Contraseña</mat-label>
+                    <input 
+                        matInput 
+                        type="password" 
+                        formControlName="confirmarPassword" 
+                        [errorStateMatcher]="errorMatcher" />
+    
+                    <mat-error *ngIf="f.confirmarPassword.errors">
+                        <app-error-messages 
+                            [errors]="f.confirmarPassword.errors"
+                            [errorMessages]="{'mustMatch': 'Las contraseñas no son iguales.'}"></app-error-messages>
+                    </mat-error>
+                </mat-form-field>
+            </div>
+        </div>
+
+        <div class="flex">
+            <mat-form-field appearance="outline" class="w-full">
+                <mat-label>RUC (Empresa a controlar)</mat-label>
+                <input 
+                    matInput 
+                    type="text" 
+                    [errorStateMatcher]="errorMatcher" 
+                    formControlName="ruc"
+                    maxlength="11" />
+
+                <mat-error *ngIf="f.ruc.errors">
+                    <app-error-messages 
+                        [errors]="f.ruc.errors"
+                        [errorMessages]="{
+                            'pattern': 'El campo debe contener sólo números.',
+                            'not_exist': 'El RUC no existe.',
+                            'not_unique': 'El RUC ya se encuentra en uso.'
+                        }"></app-error-messages>
+                </mat-error>
+
+                <mat-spinner 
+                    *ngIf="f.ruc.status === 'PENDING'"
+                    matSufix 
+                    [diameter]="18" 
+                    class="spinner-loader">
+                </mat-spinner>
+            </mat-form-field>
+        </div>
+
+        <div class="flex">
+            <mat-form-field appearance="outline" class="w-full">
+                <mat-label>Nombre o Razón</mat-label>
+                <input 
+                    matInput 
+                    type="text" 
+                    [errorStateMatcher]="errorMatcher" 
+                    [readonly]="true"
+                    formControlName="razon" />
+
+                <mat-error *ngIf="f.razon.errors">
+                    <app-error-messages [errors]="f.razon.errors"></app-error-messages>
+                </mat-error>
+            </mat-form-field>
+        </div>
+
+        <div class="flex">
+            <mat-form-field appearance="outline" class="w-full">
+                <mat-label>Dirección</mat-label>
+                <input 
+                    matInput 
+                    type="text" 
+                    [errorStateMatcher]="errorMatcher" 
+                    formControlName="direccion" />
+
+                <mat-error *ngIf="f.direccion.errors">
+                    <app-error-messages [errors]="f.direccion.errors"></app-error-messages>
+                </mat-error>
+            </mat-form-field>
+        </div>
+    </form>
+
+</mat-dialog-content>
+
+<mat-dialog-actions align="end">
+    <button mat-stroked-button mat-dialog-close>
+        <mat-icon class="icon-size-5 mr-2" [svgIcon]="'heroicons_outline:x'"></mat-icon>
+        Cancelar
+    </button>
+    <button 
+        type="button"
+        class="ml-3"
+        mat-flat-button
+        (click)="onSubmit()"
+        [color]="'primary'">
+        <mat-icon class="icon-size-5 mr-2" [svgIcon]="'heroicons_outline:save'"></mat-icon>
+        Save
+    </button>
+</mat-dialog-actions>

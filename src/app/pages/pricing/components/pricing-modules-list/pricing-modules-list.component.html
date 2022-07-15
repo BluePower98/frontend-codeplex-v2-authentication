@@ -1,0 +1,61 @@
+<mat-tab-group class="tab-group-pricing">
+    <mat-tab [label]="module.group" *ngFor="let module of modules">
+        <div 
+            class="grid grid-cols-1 md:grid-cols-2 gap-y-6 lg:gap-y-0 md:gap-x-6" 
+            [class]="module.planes.length > 3 && module.planes.length < 6 ? 'lg:grid-cols-' + module.planes.length : 'lg:grid-cols-3'">
+            <!-- Card 1 -->
+            <fuse-card class="flex-col max-w-sm md:max-w-none p-6 sm:py-8 sm:px-6" *ngFor="let plan of module.planes">
+                <div class="text-4xl font-bold tracking-tight leading-tight">
+                    {{ plan.descripcion }}
+                </div>
+
+                <!-- Price -->
+                <div class="my-10 flex items-baseline whitespace-nowrap">
+                    <div class="mr-2 text-2xl">s/</div>
+                    <div class="text-6xl font-semibold leading-tight tracking-tight">
+                        <ng-container *ngIf="yearlyBilling">{{ plan.precio}}</ng-container>
+                    </div>
+                    <div class="ml-2 text-2xl">Mes</div>
+                </div>
+
+                <!-- Features -->
+                <div class="flex flex-col mt-4">
+                    <div class="font-semibold">Incluye:</div>
+                    <div class="mt-4 space-y-2">
+                        <div class="flex" *ngFor="let content of plan.content">
+                            <mat-icon 
+                                class="icon-size-5 text-green-600"
+                                [svgIcon]="'heroicons_solid:check'">
+                            </mat-icon>
+                            <div class="ml-2 leading-5">{{ content.descripcion }}</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="flex flex-col mt-12">
+                    <mat-form-field appearance="fill">
+                        <mat-label>Precio/Periodo</mat-label>
+                        <mat-select [value]="plan.idplandetalle" [name]="'idplandetalle-' + i">
+                            <mat-option 
+                                [value]="item.idplandetalle" 
+                                *ngFor="let item of plan.detalle"
+                                (click)="plan.precio = item.precio; plan.idplandetalle = item.idplandetalle; ">
+                                {{ item.precio }} / {{ item.ciclo }} - {{ (item.ciclo ==1 )? 'mes': 'meses'}}
+                            </mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                </div>
+
+                <!-- CTA -->
+                <button 
+                    type="button"
+                    class="fuse-mat-button-large mt-6" 
+                    (click)="openModal(plan)"
+                    mat-stroked-button 
+                    [color]="'primary'">
+                    ADQUIRIR
+                </button>
+            </fuse-card>
+        </div>
+    </mat-tab>
+</mat-tab-group>

@@ -25,7 +25,7 @@ module.exports = function (config) {
       suppressAll: true // removes the duplicated traces
     },
     coverageReporter: {
-      dir: require('path').join(__dirname, './coverage/frontend-codeplex-v2-authentication-new'),
+      dir: require('path').join(__dirname, './coverage/frontend-codeplex-v2-authentication'),
       subdir: '.',
       reporters: [
         { type: 'html' },
