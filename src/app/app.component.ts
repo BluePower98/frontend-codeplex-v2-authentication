@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute, NavigationStart } from '@angular/router';
-import { HttpCancelService } from '@services/http-cancel.service';
+import { HttpCancelService } from '@core/services/http-cancel.service';
 import { filter } from 'rxjs';
 
 @Component({

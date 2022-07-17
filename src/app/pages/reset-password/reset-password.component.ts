@@ -6,7 +6,7 @@ import { FuseValidators } from '@fuse/validators';
 import { HttpErrorResponse } from '@angular/common/http';
 import { MyErrorStateMatcher } from '@directives/MyErrorStateMatcher';
 import { Router, ActivatedRoute } from '@angular/router';
-import { AuthService } from '@services/api/auth/auth.service';
+import { AuthService } from '@core/services/auth/auth.service';
 import { SweetAlertService } from '@services/ui/sweet-alert.service';
 
 @Component({
@@ -83,7 +83,7 @@ export class ResetPasswordComponent implements OnInit
     }
 
     private backToLoginPage(): void {
-        this.router.navigate(['/sign-in']);
+        this.router.navigate(['/login']);
     }
 
     private checkTokenResetPassword(): void {

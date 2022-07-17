@@ -8,9 +8,7 @@ import { tap, map, switchMap } from 'rxjs/operators';
 const BASE_URL = environment.apiBaseUrl;
 const ENDPOINT_AUTH = `${BASE_URL}/auth`;
 
-@Injectable({
-    providedIn: 'root'
-})
+@Injectable()
 export class AuthService {
     constructor(
         private http: HttpClient
@@ -45,6 +43,17 @@ export class AuthService {
         params = { ...params, token };
 
         return this.http.post(`${ ENDPOINT_AUTH }/reset_password/update`, params);
+    }
+
+    validateToken(token: string): Observable<any> {
+        return this.http.get(`${ ENDPOINT_AUTH }/validate-token/${token}`)
+            .pipe(
+                map((res: any) => res.data),
+                tap(data => {
+                    this.saveTokenStorage({ access_token: token, token_type: 'bearer' });
+                    this.saveUserStorage(data);
+                })
+            );
     }
 
     logout(): Observable<any> {

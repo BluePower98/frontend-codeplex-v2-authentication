@@ -2,6 +2,7 @@ import { Inject, Injectable } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { merge } from 'lodash-es';
 import { FUSE_APP_CONFIG } from '@fuse/services/config/config.constants';
+import { MenuOptions } from '@fuse/constants/menu-options.constant';
 
 @Injectable({
     providedIn: 'root'
@@ -9,6 +10,11 @@ import { FUSE_APP_CONFIG } from '@fuse/services/config/config.constants';
 export class FuseConfigService
 {
     private _config: BehaviorSubject<any>;
+
+    private modeOpenMenuOptions: MenuOptions= MenuOptions.normal;
+
+    private videosByMenu: BehaviorSubject<Array<any>> = new BehaviorSubject<Array<any>>([]);
+
 
     /**
      * Constructor
@@ -40,6 +46,14 @@ export class FuseConfigService
         return this._config.asObservable();
     }
 
+    set videosByMenu$(videos: any) {
+        this.videosByMenu.next(videos);
+    }
+    
+    get videosByMenu$(): Observable<Array<any>> {
+        return this.videosByMenu.asObservable();
+    }
+
     // -----------------------------------------------------------------------------------------------------
     // @ Public methods
     // -----------------------------------------------------------------------------------------------------
@@ -51,5 +65,13 @@ export class FuseConfigService
     {
         // Set the config
         this._config.next(this.config);
+    }
+
+    setModeOpenMenuOptions(mode: MenuOptions) {
+        this.modeOpenMenuOptions = mode;
+    }
+
+    getModeOpenMenuOptions(): MenuOptions {
+        return this.modeOpenMenuOptions;
     }
 }

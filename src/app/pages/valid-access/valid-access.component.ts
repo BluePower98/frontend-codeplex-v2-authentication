@@ -3,7 +3,7 @@ import { FuseAlertType } from '@fuse/components/alert';
 import { NgForm, FormGroup, FormBuilder, Validators } from '@angular/forms';
 
 import { ActivatedRoute, Router } from '@angular/router';
-import { AuthService } from '@services/api/auth/auth.service';
+import { AuthService } from '@core/services/auth/auth.service';
 
 
 @Component({

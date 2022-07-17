@@ -9,19 +9,19 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { FuseCardModule } from '@fuse/components/card';
 import { FuseAlertModule } from '@fuse/components/alert';
 import { SharedModule } from 'app/shared/shared.module';
-import { AuthSignInComponent } from 'app/pages/sign-in/sign-in.component';
-import { SignInRoutingModule } from './sign-in-routing.module';
+import { LoginComponent } from 'app/pages/login/login.component';
+import { LoginRoutingModule } from './login-routing.module';
 import { ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { ErrorMessagesModule } from '@components/material/error-messages/error-messages.module';
 
 @NgModule({
     declarations: [
-        AuthSignInComponent
+        LoginComponent
     ],
     imports: [
         CommonModule,
-        SignInRoutingModule,
+        LoginRoutingModule,
         MatButtonModule,
         MatCheckboxModule,
         MatFormFieldModule,
@@ -34,4 +34,4 @@ import { ErrorMessagesModule } from '@components/material/error-messages/error-m
         ErrorMessagesModule
     ]
 })
-export class AuthSignInModule {}
+export class LoginModule {}

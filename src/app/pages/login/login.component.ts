@@ -1,20 +1,18 @@
 import { Component, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, FormControl, FormGroupDirective } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-import { AuthService } from '@services/api/auth/auth.service';
+import { AuthService } from '@core/services/auth/auth.service';
 import { MyErrorStateMatcher } from '@directives/MyErrorStateMatcher';
 import { fuseAnimations } from '@fuse/animations';
 import { finalize } from 'rxjs/operators';
-import { HttpErrorResponse } from '@angular/common/http';
-import { ErrorHandler, HttpErrorHandlerService } from '../../services/http-error-handler.service';
 
 @Component({
-    selector: 'auth-sign-in',
-    templateUrl: './sign-in.component.html',
+    selector: 'auth-login',
+    templateUrl: './login.component.html',
     encapsulation: ViewEncapsulation.None,
     animations: fuseAnimations
 })
-export class AuthSignInComponent implements OnInit
+export class LoginComponent implements OnInit
 {
     @ViewChild(FormGroupDirective, { static: false }) formGroupDirective: FormGroupDirective
     form: FormGroup;
@@ -24,8 +22,7 @@ export class AuthSignInComponent implements OnInit
         private activatedRoute: ActivatedRoute,
         private formBuilder: FormBuilder,
         private router: Router,
-        private authService: AuthService,
-        private httpErrorHandlerService: HttpErrorHandlerService
+        private authService: AuthService
     ) {
     }
 
@@ -45,14 +42,9 @@ export class AuthSignInComponent implements OnInit
 
         this.form.disable();
 
-        this.httpErrorHandlerService.setHandler(ErrorHandler.manual);
-
         this.authService.login(this.form.value)
             .pipe(
-                finalize(() => {
-                    this.form.enable();
-                    this.httpErrorHandlerService.setHandler(ErrorHandler.automatic);
-                })
+                finalize(() => this.form.enable())
             )
             .subscribe(
                 () => {
@@ -61,9 +53,6 @@ export class AuthSignInComponent implements OnInit
                     const redirectURL = this.activatedRoute.snapshot.queryParamMap.get('redirectURL') || '/signed-in-redirect';
 
                     this.router.navigateByUrl(redirectURL);
-                },
-                (err: HttpErrorResponse) => {
-                    console.log(err.error?.message);
                 }
             );
     }

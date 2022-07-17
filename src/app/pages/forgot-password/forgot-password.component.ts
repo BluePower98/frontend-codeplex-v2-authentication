@@ -3,7 +3,7 @@ import { FormBuilder, FormGroup, Validators, FormControl, FormGroupDirective } f
 import { finalize } from 'rxjs/operators';
 import { fuseAnimations } from '@fuse/animations';
 import { MyErrorStateMatcher } from '@directives/MyErrorStateMatcher';
-import { AuthService } from '@services/api/auth/auth.service';
+import { AuthService } from '@core/services/auth/auth.service';
 
 import { SweetAlertService } from '@services/ui/sweet-alert.service';
 

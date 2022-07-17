@@ -6,9 +6,9 @@ import { FuseVerticalNavigationComponent } from '@fuse/components/navigation/ver
 import { FuseNavigationService } from '@fuse/components/navigation/navigation.service';
 import { FuseNavigationItem } from '@fuse/components/navigation/navigation.types';
 import { FuseUtilsService } from '@fuse/services/utils/utils.service';
-import { MenuOptions } from '@constants/menu-options.constant';
-import { ConfigService } from '@services/config.service';
-import { OnDemandPreloadService } from '@services/preloading-strategies/on-demand-preload.service';
+import { MenuOptions } from '@fuse/constants/menu-options.constant';
+import { FuseConfigService } from '@fuse/services/config';
+import { OnDemandPreloadService } from '@fuse/services/preloading-strategies/on-demand-preload.service';
 
 @Component({
     selector: 'fuse-vertical-navigation-basic-item',
@@ -31,7 +31,7 @@ export class FuseVerticalNavigationBasicItemComponent implements OnInit, OnDestr
         private changeDetectorRef: ChangeDetectorRef,
         private fuseNavigationService: FuseNavigationService,
         private fuseUtilsService: FuseUtilsService,
-        private configService: ConfigService,
+        private fuseConfigService: FuseConfigService,
         private router: Router,
         private onDemandPreloadService: OnDemandPreloadService
     ) {
@@ -47,7 +47,7 @@ export class FuseVerticalNavigationBasicItemComponent implements OnInit, OnDestr
      */
     ngOnInit(): void {
         this.item.function = (item: FuseNavigationItem) => {
-            if (this.configService.getModeOpenMenuOptions() === MenuOptions.newWindow) {
+            if (this.fuseConfigService.getModeOpenMenuOptions() === MenuOptions.newWindow) {
                 window.open(`${window.location.origin}${item.link}`, '_blank');
             } else {
                 this.router.navigate([item.link]);

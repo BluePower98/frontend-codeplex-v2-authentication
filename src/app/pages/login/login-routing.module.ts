@@ -1,12 +1,12 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Route, RouterModule } from '@angular/router';
-import { AuthSignInComponent } from './sign-in.component';
+import { LoginComponent } from './login.component';
 
 const routes: Route[] = [
   {
       path: '',
-      component: AuthSignInComponent
+      component: LoginComponent
   }
 ];
 
@@ -20,4 +20,4 @@ const routes: Route[] = [
     RouterModule
   ]
 })
-export class SignInRoutingModule { }
+export class LoginRoutingModule { }

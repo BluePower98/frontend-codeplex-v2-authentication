@@ -1,12 +1,10 @@
 import { Injectable } from '@angular/core';
 import { ActivatedRouteSnapshot, CanActivate, RouterStateSnapshot, UrlTree, Router, CanActivateChild, CanLoad, Route, UrlSegment } from '@angular/router';
-import { AuthService } from '@services/api/auth/auth.service';
+import { AuthService } from '@core/services/auth/auth.service';
 import { Observable, of } from 'rxjs';
 import { switchMap } from 'rxjs/operators';
 
-@Injectable({
-  providedIn: 'root'
-})
+@Injectable()
 export class AuthGuard implements CanActivate, CanActivateChild, CanLoad {
 
   constructor(
@@ -40,7 +38,7 @@ export class AuthGuard implements CanActivate, CanActivateChild, CanLoad {
         .pipe(
           switchMap(authenticated => {
             if (!authenticated) {
-              this.router.navigate(['/sign-in']);
+              this.router.navigate(['/login']);
               return of(false);
             }
 

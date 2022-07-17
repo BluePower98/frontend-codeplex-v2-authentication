@@ -10,9 +10,10 @@ import {
 } from '@angular/common/http';
 import { Observable, throwError } from 'rxjs';
 import { catchError } from 'rxjs/operators';
-import { HttpErrorHandlerService, ErrorHandler } from '@services/http-error-handler.service';
+
 import { SweetAlertService } from '@services/ui/sweet-alert.service';
-import { AuthService } from '@services/api/auth/auth.service';
+import { AuthService } from '@core/services/auth/auth.service';
+import { ErrorHandler, HttpErrorHandlerService } from '@core/services/http-error-handler.service';
 
 @Injectable()
 export class HttpErrorInterceptor implements HttpInterceptor {
@@ -64,7 +65,7 @@ export class HttpErrorInterceptor implements HttpInterceptor {
 
         if (
             !this.authService.isAuthenticated() || 
-            ['/sign-in'].includes(this.router.url)
+            ['/login'].includes(this.router.url)
         ) {
             this.sweetAlertService.error(message);
             return;
@@ -77,7 +78,7 @@ export class HttpErrorInterceptor implements HttpInterceptor {
         }).then(({ isConfirmed }) => {
             if (isConfirmed) {
                 this.authService.clearStorage();
-                this.router.navigate(['/sign-in']);
+                this.router.navigate(['/login']);
             }
         });
     }

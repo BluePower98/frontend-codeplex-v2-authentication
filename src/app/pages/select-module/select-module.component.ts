@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
-import { AuthService } from '@services/api/auth/auth.service';
+import { AuthService } from '@core/services/auth/auth.service';
 import * as moment from 'moment';
 
 @Component({
@@ -13,46 +12,55 @@ export class SelectModuleComponent implements OnInit {
 
   modules: any[] = [
     {
-      title: 'Módulo de Facturación',
+      title: 'Logística.Net',
       image: 'assets/images/cards/01-320x200.jpg',
       description: 'From rocky mountains to crystal clear lakes, there are the places you must see and enjoy.',
       redirect: 'http://localhost:4300',
+      moduleId: 2,
+      planId: 8,
       active: true
     },
     {
-      title: 'Módulo de Contabilidad',
-      image: 'assets/images/cards/10-320x200.jpg',
-      description: 'From rocky mountains to crystal clear lakes, there are the places you must see and enjoy.',
-      redirect: '',
-      active: true
-    },
-    {
-      title: 'Módulo de Logística',
+      title: 'Sicovi.Net',
       image: 'assets/images/cards/06-320x200.jpg',
       description: 'From rocky mountains to crystal clear lakes, there are the places you must see and enjoy.',
       redirect: '',
+      moduleId: 1,
+      planId: 1,
       active: true
     },
     {
-      title: 'Módulo de Óptica',
-      image: 'assets/images/cards/03-320x200.jpg',
+      title: 'Facturación Electrónica',
+      image: 'assets/images/cards/10-320x200.jpg',
       description: 'From rocky mountains to crystal clear lakes, there are the places you must see and enjoy.',
       redirect: '',
-      active: false
+      moduleId: 3,
+      planId: 10,
+      active: true
     },
     {
-      title: 'Módulo de Restaurant',
+      title: 'Restaurant',
       image: 'assets/images/cards/02-320x200.jpg',
       description: 'From rocky mountains to crystal clear lakes, there are the places you must see and enjoy.',
       redirect: '',
-      active: false
+      moduleId: 5,
+      planId: 16,
+      active: true
+    },
+    {
+      title: 'Óptica',
+      image: 'assets/images/cards/02-320x200.jpg',
+      description: 'From rocky mountains to crystal clear lakes, there are the places you must see and enjoy.',
+      redirect: '',
+      moduleId: null,
+      planId: null,
+      active: true
     }
   ];
 
   activatedModules: any[] = [];
 
   constructor(
-    private router: Router,
     private authService: AuthService
   ) { }
 
@@ -63,12 +71,12 @@ export class SelectModuleComponent implements OnInit {
   goToDashboardPage(module: any) {
     console.log('goToDashboardPage', { module });
 
-    const { redirect } = module;
+    const { redirect, planId } = module;
 
     const token = this.authService.getTokenAuthenticated();
 
     if (redirect) {
-      window.open(`${redirect}/valid-access/${token}`, '_self');
+      window.open(`${redirect}/valid-access/${planId}/${token}`, '_self');
     }
   }
 

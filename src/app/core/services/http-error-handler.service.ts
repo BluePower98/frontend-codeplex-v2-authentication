@@ -5,9 +5,7 @@ export enum ErrorHandler {
   automatic = 'automatic'
 }
 
-@Injectable({
-  providedIn: 'root'
-})
+@Injectable()
 export class HttpErrorHandlerService {
 
   private handler: ErrorHandler = ErrorHandler.automatic;

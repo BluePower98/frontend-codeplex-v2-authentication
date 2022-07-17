@@ -1,16 +1,16 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Routes, RouterModule } from '@angular/router';
-import { AuthGuard } from './guards/auth.guard';
+import { AuthGuard } from './core/guards/auth.guard';
 import { LayoutComponent } from '@layout/layout.component';
-import { OnDemandPreloadStrategy } from './services/preloading-strategies/on-demand-preload-strategy.service';
 import { PricingResolver } from './pages/pricing/pricing.resolver';
+import { OnDemandPreloadStrategy } from '@fuse/services/preloading-strategies/on-demand-preload-strategy.service';
 
 const routes: Routes = [
   {
     path: '',
     pathMatch: 'full',
-    redirectTo: 'sign-in'
+    redirectTo: 'login'
   },
   {
     path: 'signed-in-redirect',
@@ -39,8 +39,8 @@ const routes: Routes = [
         loadChildren: (): any => import('./pages/reset-password/reset-password.module').then(m => m.AuthResetPasswordModule)
       },
       {
-        path: 'sign-in',
-        loadChildren: (): any => import('./pages/sign-in/sign-in.module').then(m => m.AuthSignInModule)
+        path: 'login',
+        loadChildren: (): any => import('./pages/login/login.module').then(m => m.LoginModule)
       },
       {
         path: 'pricing',
