@@ -1,6 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthService } from '@core/services/auth/auth.service';
 import * as moment from 'moment';
+import { environment } from "@environments/environment";
+
+const url_modulo=environment.subdomains;
 
 @Component({
   selector: 'app-select-module',
@@ -54,6 +57,15 @@ export class SelectModuleComponent implements OnInit {
       redirect: '',
       moduleId: null,
       planId: null,
+      active: true
+    },
+    {
+      title: 'Integracion',
+      image: 'assets/images/cards/02-320x200.jpg',
+      description: 'From rocky mountains to crystal clear lakes, there are the places you must see and enjoy.',
+      redirect: `${url_modulo.integrator}`,
+      moduleId: 8,
+      planId: 19,
       active: true
     }
   ];
