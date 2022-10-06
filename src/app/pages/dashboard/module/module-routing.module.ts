@@ -9,8 +9,8 @@ const routes: Routes = [
     component:ModuleComponent,
     children:[
       {
-        path:'home',
-        component:AnalyticsComponent
+        path:'',
+        loadChildren:():any => import('./../analytics/analytics.module').then(m=>m.AnalyticsModule)
       }
     ]
   }

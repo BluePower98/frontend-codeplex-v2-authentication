@@ -56,7 +56,6 @@ const routes: Routes = [
       },
       {
         path: 'select-modules',
-        canActivateChild: [AuthGuard],
         loadChildren: (): any => import('./pages/select-module/select-module.module').then(m => m.SelectModuleModule)
         // loadChildren: (): any => import('./pages/pricing/pricing.module').then(m => m.PricingModule),
 
@@ -71,7 +70,7 @@ const routes: Routes = [
     // resolve: {
     //   initialData: DashboardDataResolver,
     // },
-    // canLoad: [AuthGuard],
+    canActivateChild: [AuthGuard],
     children: DASHBOARD_ROUTES
   }
 ];
