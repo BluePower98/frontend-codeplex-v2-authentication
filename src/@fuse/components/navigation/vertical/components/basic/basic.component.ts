@@ -9,6 +9,7 @@ import { FuseUtilsService } from '@fuse/services/utils/utils.service';
 import { MenuOptions } from '@fuse/constants/menu-options.constant';
 import { FuseConfigService } from '@fuse/services/config';
 import { OnDemandPreloadService } from '@fuse/services/preloading-strategies/on-demand-preload.service';
+import { AuthService } from '@core/services/auth/auth.service';
 
 @Component({
     selector: 'fuse-vertical-navigation-basic-item',
@@ -33,7 +34,9 @@ export class FuseVerticalNavigationBasicItemComponent implements OnInit, OnDestr
         private fuseUtilsService: FuseUtilsService,
         private fuseConfigService: FuseConfigService,
         private router: Router,
-        private onDemandPreloadService: OnDemandPreloadService
+        private onDemandPreloadService: OnDemandPreloadService,
+        private authService: AuthService
+
     ) {
         // Set the equivalent of {exact: false} as default for active match options.
         // We are not assigning the item.isActiveMatchOptions directly to the
@@ -50,7 +53,10 @@ export class FuseVerticalNavigationBasicItemComponent implements OnInit, OnDestr
             if (this.fuseConfigService.getModeOpenMenuOptions() === MenuOptions.newWindow) {
                 window.open(`${window.location.origin}${item.link}`, '_blank');
             } else {
-                this.router.navigate([item.link]);
+                console.log('item.link', item)
+                // this.router.navigate([item.link]);
+                const token = this.authService.getTokenAuthenticated();
+                window.open(`${item.link}/valid-access/${item.id}/${token}`, '_self');
             }
         };
 

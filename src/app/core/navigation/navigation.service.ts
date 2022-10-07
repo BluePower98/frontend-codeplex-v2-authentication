@@ -65,7 +65,41 @@ export class NavigationService {
     //             tap((navigation) => this.navigation.next(navigation))
     //         );
     // }
-
+    getModule(userId:string):Observable<any>{
+        console.log('userId :>> ', userId);
+        const url=`${BASE_URL}/v1/modules/${userId}/all`;
+        return this.http.get<any>(url)
+                .pipe(
+                    map(m=>{
+                        console.log('m', m);
+                        return m.data}),
+                    map((data)=>{
+                        console.log('data ss', data);
+                            const menu=data.map((item: any) => {
+                                const { desmodulo, idplan,subdominio, subdominioprod } = item;
+                                const id = idplan;
+                                const title=desmodulo;
+                                const link = `${subdominio}`;
+                                const icon = id === 'home' ? 'heroicons_outline:home' : 'heroicons_outline:template';
+    
+                                const children: any[] = [];
+    
+                                return {
+                                    id,
+                                    title,
+                                    type:'basic',
+                                    icon,
+                                    link,
+                                    children
+                                };
+                            });
+                        return {
+                            default: menu
+                        };
+                    }),
+                    tap((navigation) => this.navigation.next(navigation))
+                );
+    }
     private getMenuIdFromTitle(title: string): string {
         return title.toLowerCase().replace(/ /g, '');
     }

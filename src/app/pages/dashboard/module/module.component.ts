@@ -5,6 +5,8 @@ import { User } from 'app/core/user/user.types';
 import { Subject } from 'rxjs';
 import { FuseNavigationService, FuseVerticalNavigationComponent } from '@fuse/components/navigation';
 import { AuthService } from '@core/services/auth/auth.service';
+import { NavigationService } from '@core/navigation/navigation.service';
+import { filter, takeUntil } from 'rxjs/operators';
 
 
 @Component({
@@ -26,11 +28,24 @@ export class ModuleComponent implements OnInit {
   constructor(
     private fuseNavigationService: FuseNavigationService,
     private authService: AuthService,
+    private navigationService: NavigationService,
 
   ) { }
 
   ngOnInit(): void {
     this.user = this.authService.getUserDataFromStorage();
+
+    this.navigationService.navigation$
+    .pipe(
+        takeUntil(this.componentDestroyed$),
+    )
+    .subscribe(navigation => {
+        this.navigation = navigation;
+
+        this.settingModuleTitle();
+    });
+
+
   }
 
   get currentYear(): number {
@@ -44,4 +59,19 @@ export class ModuleComponent implements OnInit {
           navigation.toggle();
       }
   }
+
+  private settingModuleTitle() {
+    let children = [];
+
+    this.navigation.default.forEach(item => {
+       console.log('item :>> ', item);
+        children = [...children, ...item.children];
+    }); 
+
+    const pathName = window.location.pathname;
+console.log('pathName :>> ', pathName);
+    this.moduleTitle = children.find(child => {
+        return child.link === pathName || child.link === decodeURIComponent(pathName);
+    })?.title;
+}
 }

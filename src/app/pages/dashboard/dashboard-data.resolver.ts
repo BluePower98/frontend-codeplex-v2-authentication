@@ -41,7 +41,7 @@ export class DashboardDataResolver implements Resolve<any> {
     this.httpErrorHandlerService.setHandler(ErrorHandler.manual);
 
     return forkJoin([
-      // this.navigationService.get(planId),
+      this.navigationService.getModule(userId)
     ]).pipe(
             catchError(() => {
                 return this.router.navigate(['/unauthorized']);

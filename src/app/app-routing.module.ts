@@ -6,6 +6,7 @@ import { LayoutComponent } from '@layout/layout.component';
 import { PricingResolver } from './pages/pricing/pricing.resolver';
 import { OnDemandPreloadStrategy } from '@fuse/services/preloading-strategies/on-demand-preload-strategy.service';
 import { DASHBOARD_ROUTES } from './pages/dashboard/dashboard.routes';
+import { DashboardDataResolver } from './pages/dashboard/dashboard-data.resolver';
 
 const routes: Routes = [
   {
@@ -40,10 +41,6 @@ const routes: Routes = [
         loadChildren: (): any => import('./pages/reset-password/reset-password.module').then(m => m.AuthResetPasswordModule)
       },
       {
-        path: 'login',
-        loadChildren: (): any => import('./pages/login/login.module').then(m => m.LoginModule)
-      },
-      {
         path: 'pricing',
         loadChildren: (): any => import('./pages/pricing/pricing.module').then(m => m.PricingModule),
         resolve: {
@@ -51,26 +48,26 @@ const routes: Routes = [
         }
       },
       {
-        path: 'valid-access',
-        loadChildren: (): any => import('./pages/valid-access/valid-access.module').then(m => m.ValidAccessModule)
-      },
-      {
-        path: 'select-modules',
-        loadChildren: (): any => import('./pages/select-module/select-module.module').then(m => m.SelectModuleModule)
-        // loadChildren: (): any => import('./pages/pricing/pricing.module').then(m => m.PricingModule),
-
-      },
-    ],
-
+        path: 'login',
+        loadChildren: (): any => import('./pages/login/login.module').then(m => m.LoginModule)
+      }
+      // {
+      //   path: 'select-modules',
+      //   canActivateChild: [AuthGuard],
+      //   loadChildren: (): any => import('./pages/analytics/analytics.module').then(m => m.AnalyticsModule),
+      //   data: {
+      //     preload: true
+      //   }
+      // },
+    ]
   },
-  
   {
     path: 'select-module',
     component: LayoutComponent,
-    // resolve: {
-    //   initialData: DashboardDataResolver,
-    // },
-    canActivateChild: [AuthGuard],
+    resolve: {
+      DashboardData: DashboardDataResolver,
+    },
+    canLoad: [AuthGuard],
     children: DASHBOARD_ROUTES
   }
 ];
