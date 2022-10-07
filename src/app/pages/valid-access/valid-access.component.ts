@@ -41,8 +41,8 @@ export class ValidAccessComponent implements OnInit {
     if (this.form.get('token').value !== token) {
       return;
     } */
-
-    this.signIn();
+    console.log('regresando del modulo :>> ','regresando del modulo');
+    // this.signIn();
   }
 
   signIn(): void {

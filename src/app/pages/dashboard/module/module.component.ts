@@ -41,7 +41,6 @@ export class ModuleComponent implements OnInit {
     )
     .subscribe(navigation => {
         this.navigation = navigation;
-
         this.settingModuleTitle();
     });
 
