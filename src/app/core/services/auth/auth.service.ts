@@ -27,7 +27,9 @@ export class AuthService {
     me(): Observable<any> {
         return this.http.get(`${ ENDPOINT_AUTH }/me`)
             .pipe(
-                map((res: any) => res.data),
+                map((res: any) =>{
+                    return res.data
+                } ),
             );
     }
 

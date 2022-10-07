@@ -5,7 +5,6 @@ import { AuthGuard } from './core/guards/auth.guard';
 import { LayoutComponent } from '@layout/layout.component';
 import { PricingResolver } from './pages/pricing/pricing.resolver';
 import { OnDemandPreloadStrategy } from '@fuse/services/preloading-strategies/on-demand-preload-strategy.service';
-import { DASHBOARD_ROUTES } from './pages/dashboard/dashboard.routes';
 import { DashboardDataResolver } from './pages/dashboard/dashboard-data.resolver';
 
 const routes: Routes = [
@@ -19,14 +18,12 @@ const routes: Routes = [
     pathMatch: 'full',
     redirectTo: 'select-module'
   },
-
-  // Auth routes for guests
   {
     path: '',
     component: LayoutComponent,
-    data: {
-      layout: 'empty'
-    },
+    // data: {
+    //  layout: 'empty'
+    // }, 
     children: [
       {
         path: 'confirmation-required',
@@ -50,25 +47,21 @@ const routes: Routes = [
       {
         path: 'login',
         loadChildren: (): any => import('./pages/login/login.module').then(m => m.LoginModule)
+      },
+      {
+        path: 'valid-access',
+        loadChildren: (): any => import('./pages/valid-access/valid-access.module').then(m => m.ValidAccessModule)
+      },
+      {
+        path: 'select-module',
+        component: LayoutComponent,
+        resolve: {
+          DashboardData: DashboardDataResolver,
+        },
+        canLoad: [AuthGuard],
+        loadChildren:():any =>import('./pages/dashboard/dashboard.module').then(m=>m.DashboardModule)
       }
-      // {
-      //   path: 'select-modules',
-      //   canActivateChild: [AuthGuard],
-      //   loadChildren: (): any => import('./pages/analytics/analytics.module').then(m => m.AnalyticsModule),
-      //   data: {
-      //     preload: true
-      //   }
-      // },
     ]
-  },
-  {
-    path: 'select-module',
-    component: LayoutComponent,
-    resolve: {
-      DashboardData: DashboardDataResolver,
-    },
-    canLoad: [AuthGuard],
-    children: DASHBOARD_ROUTES
   }
 ];
 

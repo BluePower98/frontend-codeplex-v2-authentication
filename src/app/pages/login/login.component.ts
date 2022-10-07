@@ -49,9 +49,10 @@ export class LoginComponent implements OnInit
             .subscribe(
                 () => {
                     this.formGroupDirective.resetForm();
-
+                    console.log('this.activatedRoute.snapshot.queryParamMap', this.activatedRoute.snapshot);
                     const redirectURL = this.activatedRoute.snapshot.queryParamMap.get('redirectURL') || '/signed-in-redirect';
-
+                    // const redirectURL = this.activatedRoute.snapshot.queryParamMap.get('redirectURL') || '/select-module';
+// console.log('redirectURL', redirectURL)
                     this.router.navigateByUrl(redirectURL);
                 }
             );

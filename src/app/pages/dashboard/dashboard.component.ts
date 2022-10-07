@@ -8,14 +8,12 @@ import { AuthService } from '@core/services/auth/auth.service';
 import { NavigationService } from '@core/navigation/navigation.service';
 import { filter, takeUntil } from 'rxjs/operators';
 
-
 @Component({
-  selector: 'app-module',
-  templateUrl: './module.component.html',
-  styleUrls: ['./module.component.scss']
+  selector: 'app-dashboard',
+  templateUrl: './dashboard.component.html',
+  styleUrls: ['./dashboard.component.scss']
 })
-export class ModuleComponent implements OnInit {
-
+export class DashboardComponent implements OnInit {
   isScreenSmall: boolean;
   navigation: Navigation = {
       default: []
@@ -24,6 +22,7 @@ export class ModuleComponent implements OnInit {
   moduleTitle: string;
 
   private componentDestroyed$: Subject<boolean> = new Subject<boolean>();
+
 
   constructor(
     private fuseNavigationService: FuseNavigationService,
@@ -60,17 +59,17 @@ export class ModuleComponent implements OnInit {
   }
 
   private settingModuleTitle() {
-    let children = [];
+        let children = [];
 
-    this.navigation.default.forEach(item => {
-       console.log('item :>> ', item);
-        children = [...children, ...item.children];
-    }); 
+        this.navigation.default.forEach(item => {
+        console.log('item :>> ', item);
+            children = [...children, ...item.children];
+        }); 
 
-    const pathName = window.location.pathname;
-console.log('pathName :>> ', pathName);
-    this.moduleTitle = children.find(child => {
-        return child.link === pathName || child.link === decodeURIComponent(pathName);
-    })?.title;
-}
+        const pathName = window.location.pathname;
+    console.log('pathName :>> ', pathName);
+        this.moduleTitle = children.find(child => {
+            return child.link === pathName || child.link === decodeURIComponent(pathName);
+        })?.title;
+    }
 }
