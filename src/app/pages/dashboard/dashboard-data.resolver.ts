@@ -12,6 +12,7 @@ import {
   ActivatedRouteSnapshot
 } from '@angular/router';
 import { forkJoin, finalize } from 'rxjs';
+import { FuseNavigationService } from '@fuse/components/navigation';
 
 @Injectable({
   providedIn: 'root'
@@ -23,7 +24,8 @@ export class DashboardDataResolver implements Resolve<any> {
      private userService: UserService,
      private navigationService: NavigationService,
      private fuseSplashScreenService: FuseSplashScreenService,
-     private httpErrorHandlerService: HttpErrorHandlerService
+     private httpErrorHandlerService: HttpErrorHandlerService,
+     private fuseNavigationService: FuseNavigationService,
   ){
 
   }

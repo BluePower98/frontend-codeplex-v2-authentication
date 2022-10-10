@@ -62,12 +62,10 @@ export class DashboardComponent implements OnInit {
         let children = [];
 
         this.navigation.default.forEach(item => {
-        console.log('item :>> ', item);
             children = [...children, ...item.children];
         }); 
 
         const pathName = window.location.pathname;
-    console.log('pathName :>> ', pathName);
         this.moduleTitle = children.find(child => {
             return child.link === pathName || child.link === decodeURIComponent(pathName);
         })?.title;
